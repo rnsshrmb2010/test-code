@@ -1,0 +1,17 @@
+@import  '~bootstrap/scss/bootstrap';
+
+.form-control {
+  &:active,&:focus {
+    box-shadow: none;
+  }
+}
+
+.btn-select {
+  &.btn {
+    &:after {
+      position:relative;
+      float: right;
+      top: 10px;
+    }
+  }
+}
