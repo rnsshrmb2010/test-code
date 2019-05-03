@@ -31,6 +31,15 @@ class TextInput extends React.Component {
             onChange={e=> this.props.store._handleChange(field.name, e.target.value, e)}
             margin="normal"
           />
+          <div className="col-md-12">
+            <div className="row pl-2">
+              {field.errors.length > 0 && field.errors.map(error => (
+                <div key={error} className="text-danger">
+                  {error}&nbsp;
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );

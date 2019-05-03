@@ -56,6 +56,15 @@ class MultiSelectInput extends React.Component {
               ))}
             </Select>
           </FormControl>
+          <div className="col-md-12">
+            <div className="row pl-2">
+              {field.errors.length > 0 && field.errors.map(error => (
+                <div key={error} className="text-danger">
+                  {error}&nbsp;
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );

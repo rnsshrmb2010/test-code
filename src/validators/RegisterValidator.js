@@ -48,12 +48,18 @@ export default class {
         if (!this.value.length && this.required) {
           this.errors.push(ERRORS.ERR_NAME_REQ);
         }
-      break;
+        break;
       case 'job_duties':
         if (!this.value.length && this.required) {
           this.errors.push(ERRORS.ERR_JOB_DUTIES_REQ);
         }
-      break;
+        break;
+      case 'email':
+        let filter = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (this.value.length && !filter.test(this.value)) {
+          this.errors.push(ERRORS.ERR_EMAIL);
+        }
+        break;
       default:break;
     }
   }
