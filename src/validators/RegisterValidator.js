@@ -56,7 +56,9 @@ export default class {
         break;
       case 'email':
         let filter = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (this.value.length && !filter.test(this.value)) {
+        if (!this.value.length && this.required) {
+          this.errors.push(ERRORS.ERR_EMAIL_REQ);
+        } else if (this.value.length && !filter.test(this.value)) {
           this.errors.push(ERRORS.ERR_EMAIL);
         }
         break;

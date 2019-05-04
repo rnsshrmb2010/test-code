@@ -1,22 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import { withStyles } from '@material-ui/core/styles';
 import {
   ListItemText, FormControl, Input, InputLabel, MenuItem, Select, Checkbox
 } from '@material-ui/core';
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: '100%',
-    maxWidth: '100%',
-  }
-});
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,16 +21,16 @@ const MenuProps = {
 @observer
 class MultiSelectInput extends React.Component {
   render() {
-    const { field, cols, options, classes } = this.props;
+    const { field, cols, options } = this.props;
     let cont = `mt-5 col-${cols} ${field.errors.length > 0 && 'has-error'}`;
     return (
-      <div className={cont + classes.root}>
+      <div className={cont}>
         <div className={'row'}>
-          <FormControl className={classes.formControl}>
+          <FormControl className="form-control">
             <InputLabel htmlFor="select-multiple-checkbox">{field.label}</InputLabel>
             <Select
               multiple
-              value={field.value}
+              value={field.value.map(e=>e)}
               onChange={e=> this.props.store._handleChange(field.name, e.target.value, e)}
               input={<Input id="select-multiple-checkbox" />}
               renderValue={selected => selected.join(', ')}
@@ -56,8 +44,8 @@ class MultiSelectInput extends React.Component {
               ))}
             </Select>
           </FormControl>
-          <div className="col-md-12">
-            <div className="row pl-2">
+          <div className="col-md-12 mt-2">
+            <div className="row">
               {field.errors.length > 0 && field.errors.map(error => (
                 <div key={error} className="text-danger">
                   {error}&nbsp;
@@ -71,8 +59,4 @@ class MultiSelectInput extends React.Component {
   }
 }
 
-MultiSelectInput.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles, { withTheme: true })(MultiSelectInput);
+export default withRouter(MultiSelectInput);

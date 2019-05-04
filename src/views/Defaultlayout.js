@@ -1,25 +1,18 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import { Register } from './../components';
+import { Register, ShowList } from './../components';
 @inject('store')
 @observer
 class Defaultlayout extends React.Component {
   render() {
-    const { match } = this.props;
-    let pageContent = '';
-    switch(match.path) {
-      case '/':
-      case '/register':
-        pageContent = <Register /> ;
-        break;
-      default: break;
-    }
-
     return (
       <div className="container">
         <div className="row">  
-          {pageContent}
+          <Register />
+        </div>
+        <div className="row mt-5">  
+          <ShowList />
         </div>
       </div>
     );

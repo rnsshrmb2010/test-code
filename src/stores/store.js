@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 class Store {
   @observable formInput = null;
-
+  @observable itemList = [];
   createForm(ClassType) {
     this.formInput = new ClassType();
   }

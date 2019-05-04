@@ -1,11 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import classNames from 'classnames';
 import { inject, observer } from 'mobx-react';
-import PropTypes from 'prop-types';
 
 import {
-  withStyles,
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
@@ -14,22 +11,10 @@ import {
  } from '@material-ui/core';
  import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
  import SaveIcon from '@material-ui/icons/Save';
-import { RegisterInput } from './../inputs'
+import { RegisterInput } from './../inputs';
 import { CONSTS } from './../constants';
 import { TextInput, MultiSelectInput } from './../form-elements';
 
-const styles = theme => ({
-  root: {
-    width: '100%'
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-});
 
 @inject('store')
 @observer
@@ -42,15 +27,17 @@ class Register extends React.Component {
     const { store } = this.props;
     const isValid = store.formInput.validate();
     if(isValid) {
-      console.log('Form Data is Validated');
+      const item = store.formInput.getParams();
+      store.formInput.resetInputs();
+      store.itemList.push(item);
     } else {
-      console.log('Invalid');
+      console.log('Not Valid Inputs');
     }
     event.preventDefault();
   }
 
   render() {
-    const { store, classes } = this.props;
+    const { store } = this.props;
     return (
       <div className="col">
         <h1>Registation Form</h1>
@@ -65,12 +52,12 @@ class Register extends React.Component {
             cols={6}
             options={CONSTS.OPTIONS}
           />
-          <div className={'mt-5 col-6 '+classes.root}>
+          <div className={'mt-5 col-6 '}>
             <div className='row'>
               <div className='w-100'>
                 <ExpansionPanel>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography className={classes.heading}>More</Typography>
+                    <Typography>More</Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <TextInput
@@ -85,10 +72,10 @@ class Register extends React.Component {
               </div>
             </div>
           </div>
-          <div className={'mt-5 col-6 '+classes.root}>
+          <div className={'mt-5 col-6 '}>
             <div className='row'>
-              <Button variant="contained" size="medium" type='submit' className={classes.button}>
-                <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+              <Button variant="contained" size="medium" type='submit'>
+                <SaveIcon />
                 &nbsp;&nbsp;Register Now
               </Button>
             </div>
@@ -99,8 +86,5 @@ class Register extends React.Component {
   }
 }
 
-Register.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(withRouter(Register));
+export default withRouter(Register);
